@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css'
+import AppHeader from './components/shared/AppHeader';
+import Auth from './components/authentication/Auth'
+import Registration from './components/authentication/Registration';
+import AboutMe from './components/portfolio/AboutMe';
+import Portfolio from './components/pages/portfolio';
+import RouterSetup from "./components/RouterSetup";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppHeader/>ß
+      {/* <Auth/> */}
+      {/* <Registration/> */}
+      {/* <Portfolio/> */}
+      <RouterSetup/>
+
     </div>
   );
 }
