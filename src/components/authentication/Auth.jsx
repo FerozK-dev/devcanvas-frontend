@@ -12,9 +12,8 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const handleSubmit = () => {
-
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(login({ email: email, password: password }))
       .unwrap()
       .then((originalPromiseResult) => {
@@ -59,13 +58,11 @@ const Auth = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-					<div className="font-general-medium w-40 px-4 py-2.5 text-white text-center font-medium tracking-wider bg-indigo-500 hover:bg-indigo-600 focus:ring-1 focus:ring-indigo-900 rounded-lg mt-6 duration-500">
-						<Button
-							title="Login"
-							type="submit"
-							aria-label="Login"
-						/>
-					</div>
+          <Button
+            title="Login"
+            type="submit"
+            aria-label="Login"
+          />
 				</form>
 			</div>
 		</div>

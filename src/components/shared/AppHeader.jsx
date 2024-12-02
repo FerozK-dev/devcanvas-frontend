@@ -12,13 +12,13 @@ import { useNavigate } from "react-router";
 
 
 const AppHeader = () => {
-
   const [nav, setNav] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const logoutHandler = () => {
     localStorage.setItem("auth_token", "");
     localStorage.setItem("is_logged_in", false);
-    // navigate("./");
+    navigate("./");
   };
 
   const handleNav = () => {
@@ -27,7 +27,7 @@ const AppHeader = () => {
   const isAuth = localStorage.getItem("is_logged_in") === "true";
 
 	return (
-    <nav className='bg-black flex justify-between items-center h-20 w-auto mx-auto px-4 text-white'>
+    <nav className='bg-gray-700 flex justify-between items-center h-20 w-auto mx-auto px-4 text-white'>
       {/* Logo */}
       <h1 className='w-full text-3xl font-bold text-[#00df9a]'>DevCanvas</h1>
 
@@ -35,12 +35,13 @@ const AppHeader = () => {
       
       {isAuth === true && (
         <ul className='hidden md:flex'>
-          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
-            <Link to="./porfolio">
-              <button>My Portfolio</button>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-3 w-32 cursor-pointer duration-300 hover:text-black'>
+            <Link to="./portfolio">
+              My Portfolio
+              {/* <button>My Portfolio</button> */}
             </Link>
           </li>
-          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-3 cursor-pointer duration-300 hover:text-black'>
             <button onClick={() => logoutHandler()}>Logout</button>
           </li>
         </ul>
