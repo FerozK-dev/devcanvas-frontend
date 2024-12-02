@@ -1,4 +1,3 @@
-// import './css/App.css'
 import './index.css';
 import AppHeader from './components/shared/AppHeader';
 import RouterSetup from "./components/RouterSetup";

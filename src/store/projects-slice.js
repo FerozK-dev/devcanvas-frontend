@@ -4,7 +4,9 @@ import canvasApi from "../api";
 const initialProjectState = {
   description: "",
   title: "",
-  display_image: ""
+  display_image: "",
+  allProjects: [],
+  id: ""
 };
 
 
@@ -22,13 +24,13 @@ const fetchProjects = createAsyncThunk("fetctProjects/projectsSlice", async () =
 const updateProject = createAsyncThunk(
   "updateProject/projectsSlice",
   async (
-    { description, title, id },
+    formData,
     { rejectWithValue }
   ) => {
     try {
       const project = await canvasApi.patch(
-        `/api/v1/projects/${id}`,
-        { description, title },
+        `/api/v1/projects/${formData.getAll("id")}`,
+        formData,
         {
           headers: {
             auth_token: `${JSON.parse(localStorage.getItem("auth_token"))}`,
@@ -45,13 +47,13 @@ const updateProject = createAsyncThunk(
 const addProject = createAsyncThunk(
   "addProject/projectsSlice",
   async (
-    { description, title },
+    formData,
     { rejectWithValue }
   ) => {
     try {
       const project = await canvasApi.post(
         "/api/v1/projects/",
-        { description, title },
+        formData,
         {
           headers: {
             auth_token: `${JSON.parse(localStorage.getItem("auth_token"))}`,
@@ -89,7 +91,7 @@ const projectsSlice = createSlice({
     builder
       .addCase(fetchProjects.pending, (state) => {})
       .addCase(fetchProjects.fulfilled, (state, action) => {
-        state.allprojects = action.payload;
+        state.allProjects = action.payload;
       })
       .addCase(fetchProjects.rejected, (state, action) => {}) 
       .addCase(updateProject.pending, (state) => {})
