@@ -15,7 +15,7 @@ const fetchUser = createAsyncThunk("fetchUser/profileSlice", async () => {
 
 const editUser = createAsyncThunk(
   "editUser/profileSlice",
-  async ({ first_name, last_name,  }, { rejectWithValue }) => {
+  async ({ first_name, last_name, location, about_me, contact, title, headline, github_url, linked_url, work_email }, { rejectWithValue }) => {
     try {
       const profile = await canvasApi.patch(
         "/api/v1/users/",
@@ -39,13 +39,13 @@ const initialProfileState = {
   lastName: "",
   email: "",
   location: "",
-  about_me: "", contact: "",
+  aboutMe: "", contact: "",
   title: "",
   headline: "",
-  github_url: "",
-  linked_url: "",
-  work_email: "",
-  profile_picture: "",
+  githubUrl: "",
+  linkedUrl: "",
+  workEmail: "",
+  profilePicture: "",
   profileData: {}
 };
 

@@ -10,9 +10,10 @@ const FormInput = ({
   ariaLabelName,
   value,
   onChange,
+  customClass
 }) => {
 	return (
-	  <div className="font-general-regular mb-4">
+    <div className={`font-general-regular mb-4 ${customClass}`}>
 			<label
 				className="block text-lg text-primary-dark dark:text-primary-light mb-1"
 				htmlFor={labelFor}
