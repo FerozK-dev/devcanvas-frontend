@@ -45,6 +45,7 @@ const initialProfileState = {
   github_url: "",
   linked_url: "",
   work_email: "",
+  profile_picture: "",
   profileData: {}
 };
 
