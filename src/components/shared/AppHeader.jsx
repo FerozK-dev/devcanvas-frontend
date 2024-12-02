@@ -27,52 +27,43 @@ const AppHeader = () => {
   const isAuth = localStorage.getItem("is_logged_in") === "true";
 
 	return (
-    <div className='bg-black flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white'>
+    <nav className='bg-black flex justify-between items-center h-20 w-auto mx-auto px-4 text-white'>
       {/* Logo */}
       <h1 className='w-full text-3xl font-bold text-[#00df9a]'>DevCanvas</h1>
 
       {/* Desktop Navigation */}
-      <ul className='hidden md:flex'>
-        {isAuth === true && (
-          <div>
-            <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
-              <Link to="./profile">
-                <button>Profile</button>
-              </Link>
-            </li>
-            <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
-              <button onClick={() => logoutHandler()}>Logout</button>
-            </li>
-          </div>
-        )}
-        {!isAuth && (
-          <div>
-            <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
-              <Link to="./signup">
-                <button>Signup</button>
-              </Link>
-            </li>
-            <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
-              <Link to="./login">
-                <button>Login</button>
-              </Link>
-            </li>
-          </div>
-        )}
-        {/* {navItems.map(item => (
-          <li
-            key={item.id}
-            className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'
-          >
-            {item.text}
+      
+      {isAuth === true && (
+        <ul className='hidden md:flex'>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
+            <Link to="./porfolio">
+              <button>My Portfolio</button>
+            </Link>
           </li>
-        ))} */}
-      </ul>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
+            <button onClick={() => logoutHandler()}>Logout</button>
+          </li>
+        </ul>
+      )}
+      {!isAuth && (
+        <ul className='hidden md:flex'>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
+            <Link to="./signup">
+              <button>Signup</button>
+            </Link>
+          </li>
+          <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
+            <Link to="./login">
+              <button>Login</button>
+            </Link>
+          </li>
+        </ul>
+      )}
 
       {/* Mobile Navigation Icon */}
-      <div onClick={handleNav} className='block md:hidden'>
+      {/* <div onClick={handleNav} className='block md:hidden'>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
-      </div>
+      </div> */}
 
       {/* Mobile Navigation Menu */}
       {/* <ul
@@ -94,9 +85,8 @@ const AppHeader = () => {
             {item.text}
           </li>
         ))}
-      </ul> */}
-      
-    </div>
+      </ul> */}  
+    </nav>
   );
 
 };

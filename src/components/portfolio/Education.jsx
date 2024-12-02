@@ -6,8 +6,6 @@ import Button from '../reusable/Button';
 import FormInput from '../reusable/FormInput';
 import { useNavigate } from "react-router-dom";
 
-
-
 function Education(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -48,15 +46,11 @@ function Education(){
     return (
       <div className="bg-gray-50 px-8 py-10 rounded-md" key={id}>
         <h4 className="font-medium text-gray-700 text-lg mb-4">{school}</h4>
-        <h5 className="font-medium text-gray-700 text-lg mb-4">{start_year} – {end_year}</h5>
-        <h5 className="font-medium text-gray-700 text-lg mb-4">{degree}</h5>
-        <h5 className="font-medium text-gray-700 text-lg mb-4">{field}</h5>
-
+        <p className="font-small text-gray-700 text-lg mb-4">{start_year} - {end_year} {degree} {field}</p>
         <p className="font-normal text-gray-500 text-md mb-4">{description}</p>
-        <h5 className="font-medium text-gray-700 text-lg mb-4">Grade: {grade}</h5>
 
         <div className="relative">
-          <h6 className="font-semibold text-gray-500 text-md relative z-10">See the place here</h6>
+          <h6 className="font-semibold text-gray-500 text-md relative z-10">Grade: {grade}</h6>
           <span className="w-32 h-1 bg-blue-200 absolute bottom-1 left-0 z-0"></span>
         </div>
       </div>

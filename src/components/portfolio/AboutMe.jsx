@@ -18,16 +18,20 @@ function AboutMe() {
   return (
     <div className="container max-w-screen-xl mx-auto px-4">
 
-      <nav className="flex items-center justify-between mb-40">
-        {/* <img src="assets/image/navbar-logo.png" alt="Logo"> */}
+      <div className="flex items-center justify-between mb-40">
+        {/* <img src="assets/image/divbar-logo.png" alt="Logo"> */}
 
         <button className="px-7 py-3 md:px-9 md:py-4 bg-white font-medium md:font-semibold text-gray-700 text-md rounded-md hover:bg-gray-700 hover:text-white transition ease-linear duration-500">Get my CV</button>
-      </nav>
+      </div>
 
       <div className="text-center">
-        <div className="flex justify-center mb-16">
-          {/* <img src="assets/image/home-img.png" alt="Image"> */}
-        </div>
+      <div className="flex justify-center mb-16">
+        <img 
+          src={profileData.profile_picture} 
+          alt="Profile" 
+          className="w-64 h-64 rounded-full" 
+        />
+      </div>
 
         <h6 className="font-medium text-gray-600 text-lg md:text-2xl uppercase mb-8">{profileData?.first_name} {profileData?.last_name}</h6>
 
