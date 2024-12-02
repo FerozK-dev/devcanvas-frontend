@@ -18,6 +18,8 @@ function EditUserModal({ isOpen, onClose }) {
   const [githubUrl, setGithubUrl] = useState("");
   const [linkedUrl, setLinkedUrl] = useState("");
   const [workEmail, setWorkEmail] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [resume, setResume] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,28 +34,33 @@ function EditUserModal({ isOpen, onClose }) {
       setGithubUrl(profile.github_url || "");
       setLinkedUrl(profile.linked_url || "");
       setWorkEmail(profile.work_email || "");
+      setProfilePic(profile?.profile_picture);
+      setResume(profile?.resume);
     }
   }, [isOpen, profile]);
   // const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    console.log("on submit");
     e.preventDefault();
 
-    dispatch(
-      editUser({
-        first_name: firstName,
-        last_name: lastName,
-        title: title,
-        location: location, 
-        about_me: aboutMe,
-        contact: contact,
-        headline: headline,
-        github_url: githubUrl, 
-        linked_url: linkedUrl, 
-        work_email: workEmail
-      })
-    )
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("title", title);
+    formData.append("location", location);
+    formData.append("about_me", aboutMe);
+    formData.append("contact", contact);
+    formData.append("headline", headline);
+    formData.append("github_url", githubUrl);
+    formData.append("linked_url", linkedUrl);
+    formData.append("work_email", workEmail);
+    formData.append("resume", resume);
+  
+    if (profilePic) {
+      formData.append("profile_picture", profilePic);
+    }
+
+    dispatch(editUser(formData))
       .unwrap()
       .then((originalPromiseResult) => {
         // navigate("/portfolio");
@@ -71,8 +78,8 @@ function EditUserModal({ isOpen, onClose }) {
           console.log("Form submission event triggered"); // Debugging
           handleSubmit(e); // Pass the event to handleSubmit
         }}
-        className="grid grid-cols-2 gap-4"
       >
+        <div className="grid grid-cols-2 gap-4">
           <FormInput
             inputLabel="First Name"
             labelFor="firstName"
@@ -191,8 +198,29 @@ function EditUserModal({ isOpen, onClose }) {
             value={workEmail || ""}
             onChange={(e) => setWorkEmail(e.target.value)}
           />
-          <Button title="Save"/>
-        </form>
+
+          <FormInput
+            inputLabel="Profile Picture"
+            labelFor="profile_pic"
+            inputType="file"
+            inputId="work_email"
+            inputName="profile_picture"
+            ariaLabelName="picture"
+            onChange={(e) => setProfilePic(e.target.files[0])}
+
+          />
+          <FormInput
+            inputLabel="CV"
+            labelFor="CV"
+            inputType="file"
+            inputId="cv"
+            inputName="CV"
+            ariaLabelName="file"
+            onChange={(e) => setResume(e.target.files[0])}
+          />
+        </div>
+        <Button title="Save"/>
+      </form>
     </Modal>
   );
 }

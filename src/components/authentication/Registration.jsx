@@ -93,7 +93,7 @@ function Registration() {
         <FormInput
           inputLabel="confirm Password"
           labelFor="confirm password"
-          inputType="confirm password"
+          inputType="password"
           inputId="confirm password"
           inputName="confirm password"
           placeholderText="Confirm password"

@@ -9,10 +9,10 @@ function Portfolio() {
   return (
     <div>
       <AboutMe/>
-      <Sandbox/>
-      <Projects/>
+      {/* <Sandbox/> */}
       <Education/>
       <Experience/>
+      <Projects/>
     </div>
   )
 
