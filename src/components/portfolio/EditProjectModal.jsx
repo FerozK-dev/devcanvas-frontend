@@ -46,7 +46,7 @@ function EditProject({ isOpen, onClose, project }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-lg font-medium text-gray-800 mb-4">Add Project</h2>
+      <h2 className="text-lg font-medium text-gray-800 mb-4">Edit Project</h2>
       <ProjectForm
         title={title}
         description={description}

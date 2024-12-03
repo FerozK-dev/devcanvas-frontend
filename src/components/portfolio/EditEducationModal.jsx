@@ -56,7 +56,7 @@ function EditEducationModal({ isOpen, onClose, education }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-lg font-medium text-gray-800 mb-4">Add Education</h2>
+      <h2 className="text-lg font-medium text-gray-800 mb-4">Edit Education</h2>
       <EducationForm
         startYear={startYear}
         endYear={endYear}
