@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const canvasApi = axios.create({
-  baseURL: "http://localhost:3000",
+  // baseURL: "http://localhost:3000",
+  baseURL: "https://devcanvas-backend.onrender.com",  //productionUrl
   validateStatus: function (status) {
     return status < 500;
   },
@@ -14,7 +15,7 @@ const canvasApi = axios.create({
 
 canvasApi.interceptors.response.use(
   (response) => {
-    console.log("Response:", response);
+    // console.log("Response:", response);
     return response;
   },
   (error) => {

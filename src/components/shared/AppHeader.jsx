@@ -29,14 +29,16 @@ const AppHeader = () => {
 	return (
     <nav className='bg-gray-700 flex justify-between items-center h-20 w-auto mx-auto px-4 text-white'>
       {/* Logo */}
-      <h1 className='w-full text-3xl font-bold text-[#00df9a]'>DevCanvas</h1>
+      <Link to="./">
+        <h1 className='w-full text-3xl font-bold text-[#00df9a]'>DevCanvas</h1>
+      </Link>
 
       {/* Desktop Navigation */}
       
       {isAuth === true && (
         <ul className='hidden md:flex'>
           <li className='p-4 hover:bg-[#00df9a] rounded-xl m-3 w-32 cursor-pointer duration-300 hover:text-black'>
-            <Link to="./portfolio">
+            <Link to="/my-portfolio">
               My Portfolio
               {/* <button>My Portfolio</button> */}
             </Link>

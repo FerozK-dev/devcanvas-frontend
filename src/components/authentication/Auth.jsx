@@ -18,7 +18,7 @@ const Auth = () => {
       .unwrap()
       .then((originalPromiseResult) => {
         console.log("hello you are logged in")
-        navigate("/portfolio");
+        navigate("/my-portfolio");
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.message);

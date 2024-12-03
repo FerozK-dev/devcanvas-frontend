@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEducation, fetchEducations } from "../../store/education-slice"
-
-import Button from '../reusable/Button';
-import FormInput from '../reusable/FormInput';
 import { useNavigate } from "react-router-dom";
 
-function Education(){
+function Education({ data, isPublic }){
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [educations, setEducations] = useState(
     useSelector((state) => state?.educations?.allEducations)
   );
 
-  // const userCalorieLimit = useSelector(
-  //   (state) => state.profile.profileData.calorie_limit
-  // );
-
   useEffect(() => {
-    dispatch(fetchEducations())
-      .unwrap()
-      .then((result) => {
-        setEducations(result);
-      });
-  }, [educations?.length]);
+    if (isPublic && data) {
+      setEducations(data || []);
+    } else if (!isPublic) {
+        dispatch(fetchEducations())
+        .unwrap()
+        .then((result) => {
+          setEducations(result);
+        });
+    }
+  }, [dispatch, isPublic, data]);
 
   const deleteHandler = (education) => {
     dispatch(
