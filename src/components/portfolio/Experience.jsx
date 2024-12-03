@@ -82,24 +82,22 @@ function Experience({ data, isPublic }) {
           <p className="font-normal text-gray-400 text-base">{start_date} - {end_date}</p>
         </div>
         {!isPublic && (
-          <>
-          <div className="space-y-2 md:space-y-4">
-            <button
-              onClick={() => openEditModal(experience)}
-              className="font-medium w-12 h-12 md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-            >
-              Edit
-            </button>
+          <div className="justify-items-end mt-10">
+            <div className="inline-flex rounded-md shadow-sm" role="group">
+              <button 
+                onClick={() => openEditModal(experience)}
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              >
+                Edit
+              </button>
+              <button 
+                onClick={() => deleteHandler(experience)}
+                className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-          <div className="space-y-2 md:space-y-4">
-            <button
-              onClick={() => deleteHandler(experience)}
-              className="font-medium h-12 w-12 md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-            >
-              Delete
-            </button>
-          </div>
-          </>
         )}
       </div>
     )
@@ -118,7 +116,7 @@ function Experience({ data, isPublic }) {
           <>
             <button
               onClick={() => setModalOpen(true)}
-              className="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+              className="text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
             >
               Add Experience
             </button>
@@ -130,7 +128,7 @@ function Experience({ data, isPublic }) {
               <EditExpereience
                 isOpen={isModalOpen}
                 onClose={() => setModalOpen(false)}
-                id={selectedExperience.id}
+                experience={selectedExperience}
               />
             )}
           </>

@@ -15,6 +15,10 @@ const login = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const auth = await canvasApi.post("/api/v1/session/", { email, password });
+      debugger;
+      if (304 <= auth?.status) {
+        return rejectWithValue(auth?.data?.message);
+      }
       return auth.data;
     } catch (error) {
       console.error("Login failed:", error.response?.data);
@@ -38,6 +42,9 @@ const signup = createAsyncThunk(
         last_name,
         password_confirmation,
       });
+      if (304 <= register?.status) {
+        return rejectWithValue(register?.data?.message);
+      }
       return register.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");

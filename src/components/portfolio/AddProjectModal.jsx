@@ -26,7 +26,7 @@ function AddProjects({ isOpen, onClose }) {
     dispatch(addProject(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        // navigate("/portfolio");
+        window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.error);

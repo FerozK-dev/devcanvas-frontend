@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addExperience } from "../../store/experience-slice";
 import Modal from "../reusable/EditModal";
 import ExperienceForm from "../reusable/ExperienceForm";
@@ -12,6 +12,7 @@ function AddExpereience({ isOpen, onClose }) {
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
   const dispatch = useDispatch();
+  const experiences = useSelector((state) => state.experiences.allExperiences);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ function AddExpereience({ isOpen, onClose }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
+        window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.error);

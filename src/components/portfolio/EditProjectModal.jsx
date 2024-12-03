@@ -4,9 +4,7 @@ import { updateProject } from "../../store/projects-slice";
 import Modal from "../reusable/EditModal";
 import ProjectForm from "../reusable/ProjectForm";
 
-function EditProject({ isOpen, onClose, id }) {
-  const projects = useSelector((state) => state.projects.allProjects);
-  const project = projects?.find((m) => m.id === Number(id))
+function EditProject({ isOpen, onClose, project }) {
 
   const [title, setTitle] = useState("") 
   const [description, setDescription] = useState("");
@@ -30,7 +28,7 @@ function EditProject({ isOpen, onClose, id }) {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("id", id)
+    formData.append("id", project.id)
  
     if (picture) {
       formData.append("display_image", picture);
@@ -39,7 +37,7 @@ function EditProject({ isOpen, onClose, id }) {
     dispatch(updateProject(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        // navigate("/portfolio");
+        window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.error);

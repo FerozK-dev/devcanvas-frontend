@@ -5,17 +5,18 @@ import AboutMe from "../portfolio/AboutMe";
 import Projects from "../portfolio/Projects";
 import Education from "../portfolio/Education";
 import Experience from "../portfolio/Experience";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function PublicPortfolio({ userId }) {
+function PublicPortfolio() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useParams();
 
   const { portfolioData, status } = useSelector((state) => state.publicProfile);
   console.log("status", status)
 
   useEffect(() => {
-    dispatch(fetchPublicProfile(1));
+    dispatch(fetchPublicProfile(userId));
   }, [dispatch]);
 
   if (status === "failed") {
