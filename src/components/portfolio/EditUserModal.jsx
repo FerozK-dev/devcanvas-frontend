@@ -63,7 +63,7 @@ function EditUserModal({ isOpen, onClose }) {
     dispatch(editUser(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        // navigate("/portfolio");
+        window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.error);

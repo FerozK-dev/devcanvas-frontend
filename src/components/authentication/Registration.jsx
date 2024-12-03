@@ -13,7 +13,7 @@ function Registration() {
   const [firstName, setFName] = useState("");
   const [passwordConf, setPasswordConf] = useState("");
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const registrationHandler = async () => {
     console.log("in auth handler");
@@ -28,7 +28,7 @@ function Registration() {
     dispatch(signup(data))
       .unwrap()
       .then((originalPromiseResult) => {
-        // navigate("/profile");
+        navigate("/my-portfolio");
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.message);

@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";;
-import { updateExperience } from "../../store/experience-slice";
+import { fetchExperiences, updateExperience } from "../../store/experience-slice";
 import Modal from "../reusable/EditModal";
 import ExperienceForm from "../reusable/ExperienceForm";
 
-function EditExpereience({ isOpen, onClose, id }) {
+function EditExpereience({ isOpen, onClose, experience, setExperiences }) {
   const experiences = useSelector((state) => state.experiences.allExperiences);
-  const experience = experiences?.find((m) => m.id === Number(id))
-
+  
   const [title, setTitle] = useState("") 
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState("");
@@ -20,6 +19,7 @@ function EditExpereience({ isOpen, onClose, id }) {
     e.preventDefault();
 
     dispatch(updateExperience({
+      id: experience?.id,
       title: title,
       description: description,
       company: company,
@@ -29,6 +29,7 @@ function EditExpereience({ isOpen, onClose, id }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
+        window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.error);
