@@ -33,6 +33,27 @@ const editUser = createAsyncThunk(
     }
   }
 );
+
+const togglePublish = createAsyncThunk(
+  "togglePublish/profileSlice",
+  async (_,{ rejectWithValue }) => {
+    try {
+      const response = await canvasApi.patch(
+        `/api/v1/users/toggle_portfolio_status`,
+        {},
+        {
+          headers: {
+            auth_token: `${JSON.parse(localStorage.getItem("auth_token"))}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 // { first_name, last_name, location, about_me, contact, title, headline, github_url, linked_url, work_email, profile },
 
 
@@ -48,6 +69,7 @@ const initialProfileState = {
   linkedUrl: "",
   workEmail: "",
   profilePicture: "",
+  publishPortfolio: "",
   profileData: {}
 };
 
@@ -71,6 +93,6 @@ const profileSlice = createSlice({
     }
 });
 
-export { fetchUser, editUser };
+export { fetchUser, editUser, togglePublish };
 
 export default profileSlice.reducer;

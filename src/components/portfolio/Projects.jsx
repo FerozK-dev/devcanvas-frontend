@@ -5,7 +5,7 @@ import AddProjects from "./AddProjectModal";
 import EditProject from "./EditProjectModal";
 import Button from "../reusable/Button";
 
-function Projects() {
+function Projects({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const dispatch = useDispatch();
@@ -15,12 +15,17 @@ function Projects() {
   );
 
   useEffect(() => {
-    dispatch(fetchProjects())
-      .unwrap()
-      .then((result) => {
-        setProjects(result);
-      });
-  }, [projects?.length]);
+    if (isPublic && data) {
+      setProjects(data || []);
+    } else if (!isPublic) {
+        dispatch(fetchProjects())
+        .unwrap()
+        .then((result) => {
+          setProjects(result);
+        });
+    }
+  }, [dispatch, isPublic, data]);
+
 
     const openEditModal = (project) => {
       setSelectedProject(project);
@@ -35,7 +40,7 @@ function Projects() {
     )
       .unwrap()
       .then((originalPromiseResult) => {
-        setProjects(Projects.filter((m) => m !== project));
+        setProjects(projects.filter((m) => m !== project));
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.message);
@@ -63,12 +68,22 @@ function Projects() {
           <p className="font-normal text-gray-500 text-sm md:text-base">{description}</p>
           {/* <p className="font-normal text-gray-500 text-sm md:text-base">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae dignissimos non culpa, aperiam quas facilis fuga aliquid iure, inventore, laboriosam dicta voluptatem consequatur quo. Repellendus aliquam ipsam aspernatur quo impedit.</p> */}
         </div>
-        <button
-          onClick={() => openEditModal(project)}
-          className="md:px-9 md:py-4 font-medium h-12 lg:flex-row md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-        >
-          Edit
-        </button>
+        {!isPublic && (
+          <>
+            <button
+              onClick={() => openEditModal(project)}
+              className="md:px-9 md:py-4 font-medium h-12 lg:flex-row md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => deleteHandler(project)}
+              className="md:px-9 md:py-4 font-medium h-12 lg:flex-row md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Delete
+            </button>
+          </>)
+        }
       </div>
     )
   });
@@ -87,17 +102,21 @@ function Projects() {
             {renderProjects}
           </div>
         </div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-        >
-          Add a Project
-        </button>
-        <AddProjects  
-          isOpen={isModalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-        {selectedProject && (
+        {!isPublic && (
+          <>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Add a Project
+            </button>
+            <AddProjects  
+              isOpen={isModalOpen}
+              onClose={() => setModalOpen(false)}
+            />
+          </>
+        )}
+        {selectedProject && !isPublic && (
           <EditProject
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}

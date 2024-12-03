@@ -4,7 +4,7 @@ import { deleteExperience, fetchExperiences } from "../../store/experience-slice
 import AddExpereience from "./AddExperienceModal";
 import EditExpereience from "./EditExperienceModal";
 
-function Experience() {
+function Experience({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const dispatch = useDispatch();
@@ -13,14 +13,17 @@ function Experience() {
     useSelector((state) => state?.experiences?.allExperiences)
   );
 
-
   useEffect(() => {
-    dispatch(fetchExperiences())
-      .unwrap()
-      .then((result) => {
-        setExperiences(result);
-      });
-  }, [experiences?.length]);
+    if (isPublic && data) {
+      setExperiences(data || []);
+    } else if (!isPublic) {
+        dispatch(fetchExperiences())
+        .unwrap()
+        .then((result) => {
+          setExperiences(result);
+        });
+    }
+  }, [dispatch, isPublic, data]);
 
   const deleteHandler = (experience) => {
     dispatch(
@@ -30,7 +33,7 @@ function Experience() {
     )
       .unwrap()
       .then((originalPromiseResult) => {
-        setExperiences(experience.filter((m) => m !== experience));
+        setExperiences(experiences.filter((m) => m !== experience));
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.message);
@@ -38,7 +41,6 @@ function Experience() {
   };
 
   const openEditModal = (experience) => {
-    console.log("eeeddddddddeee", experience)
     setSelectedExperience(experience);
     setModalOpen(true);
   };
@@ -48,7 +50,8 @@ function Experience() {
     return (
       <div
         key={id}
-        className="flex flex-col lg:flex-row justify-between mb-8"
+        // className="flex flex-col lg:flex-row justify-between mb-8 grid grid-cols-4 gap-4"
+        className="mb-8 grid grid-cols-5 gap-4"
       >
         {/* Company */}
         <div className="space-y-2 md:space-y-4">
@@ -78,12 +81,26 @@ function Experience() {
           </h6>
           <p className="font-normal text-gray-400 text-base">{start_date} - {end_date}</p>
         </div>
-        <button
-          onClick={() => openEditModal(experience)}
-          className="md:px-9 md:py-4 font-medium h-12 lg:flex-row md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-        >
-          Edit
-        </button>
+        {!isPublic && (
+          <>
+          <div className="space-y-2 md:space-y-4">
+            <button
+              onClick={() => openEditModal(experience)}
+              className="font-medium w-12 h-12 md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Edit
+            </button>
+          </div>
+          <div className="space-y-2 md:space-y-4">
+            <button
+              onClick={() => deleteHandler(experience)}
+              className="font-medium h-12 w-12 md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Delete
+            </button>
+          </div>
+          </>
+        )}
       </div>
     )
   });
@@ -97,22 +114,26 @@ function Experience() {
         <p className="font-normal text-gray-500 text-xs md:text-base mb-20">Below is a summary of the places I studied</p>
         {renderExperience}
 
-        <button
-          onClick={() => setModalOpen(true)}
-          className="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
-        >
-          Add Experience
-        </button>
-        <AddExpereience  
-          isOpen={isModalOpen}
-          onClose={() => setModalOpen(false)}
-        />
-        {selectedExperience && (
-          <EditExpereience
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
-            id={selectedExperience.id} // Pass the selected project to the modal
-          />
+        {!isPublic && (
+          <>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="px-7 py-3 md:px-9 md:py-4 font-medium md:font-semibold bg-gray-700 text-gray-50 text-sm rounded-md hover:bg-gray-500 hover:text-gray-700 transition ease-linear duration-500"
+            >
+              Add Experience
+            </button>
+            <AddExpereience  
+              isOpen={isModalOpen}
+              onClose={() => setModalOpen(false)}
+            />
+            {selectedExperience && (
+              <EditExpereience
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+                id={selectedExperience.id}
+              />
+            )}
+          </>
         )}
       </div>
     </section>
