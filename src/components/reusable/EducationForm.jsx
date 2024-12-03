@@ -67,7 +67,7 @@ const EducationForm = ({
           inputType="text"
           inputId="description"
           inputName="description"
-          placeholderText="Your project description"
+          placeholderText="study description"
           ariaLabelName="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

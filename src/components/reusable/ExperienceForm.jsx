@@ -41,7 +41,7 @@ const ExperienceForm = ({
           inputType="text"
           inputId="company"
           inputName="company"
-          placeholderText="Your company"
+          placeholderText="Company Name"
           ariaLabelName="company"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
@@ -52,7 +52,7 @@ const ExperienceForm = ({
           inputType="text"
           inputId="location"
           inputName="location"
-          placeholderText="Your location"
+          placeholderText="Company location"
           ariaLabelName="location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
@@ -63,7 +63,7 @@ const ExperienceForm = ({
           inputType="text"
           inputId="description"
           inputName="description"
-          placeholderText="Your project description"
+          placeholderText="Your experience description"
           ariaLabelName="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

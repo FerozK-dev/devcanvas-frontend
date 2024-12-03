@@ -50,7 +50,7 @@ function EditExpereience({ isOpen, onClose, experience, setExperiences }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-lg font-medium text-gray-800 mb-4">Add Experience</h2>
+      <h2 className="text-lg font-medium text-gray-800 mb-4">Edit Experience</h2>
       <ExperienceForm
         title={title}
         company={company}

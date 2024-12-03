@@ -25,7 +25,7 @@ const ProjectForm = ({
           inputType="text"
           inputId="title"
           inputName="title"
-          placeholderText="Your title"
+          placeholderText="Project title"
           ariaLabelName="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
