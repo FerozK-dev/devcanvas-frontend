@@ -8,7 +8,7 @@ import Button from "../reusable/Button";
 
 function EditUserModal({ isOpen, onClose }) {
   const profile = useSelector((state) => state.profile.profileData);
-  const [title, setTitle] = useState("") 
+  const [title, setTitle] = useState("")
   const [lastName, setLName] = useState("");
   const [firstName, setFName] = useState("");
   const [location, setLocation] = useState("");
@@ -34,8 +34,8 @@ function EditUserModal({ isOpen, onClose }) {
       setGithubUrl(profile.github_url || "");
       setLinkedUrl(profile.linked_url || "");
       setWorkEmail(profile.work_email || "");
-      setProfilePic(profile?.profile_picture);
-      setResume(profile?.resume);
+      // setProfilePic(profile?.profile_picture);
+      // setResume(profile?.resume);
     }
   }, [isOpen, profile]);
   // const navigate = useNavigate();
@@ -51,11 +51,11 @@ function EditUserModal({ isOpen, onClose }) {
     formData.append("about_me", aboutMe);
     formData.append("contact", contact);
     formData.append("headline", headline);
-    formData.append("github_url", githubUrl);
-    formData.append("linked_url", linkedUrl);
-    formData.append("work_email", workEmail);
-    formData.append("resume", resume);
-  
+    // formData.append("github_url", githubUrl);
+    // formData.append("linked_url", linkedUrl);
+    // formData.append("work_email", workEmail);
+    // formData.append("resume", resume);
+
     if (profilePic) {
       formData.append("profile_picture", profilePic);
     }
@@ -163,7 +163,7 @@ function EditUserModal({ isOpen, onClose }) {
           />
 
 
-          <FormInput
+          {/* <FormInput
             inputLabel="GitHub URL"
             labelFor="github_url"
             inputType="text"
@@ -185,9 +185,9 @@ function EditUserModal({ isOpen, onClose }) {
             ariaLabelName="linked_url"
             value={linkedUrl || ""}
             onChange={(e) => setLinkedUrl(e.target.value)}
-          />
+          /> */}
 
-          <FormInput
+          {/* <FormInput
             inputLabel="Work Email"
             labelFor="work_email"
             inputType="text"
@@ -197,7 +197,7 @@ function EditUserModal({ isOpen, onClose }) {
             ariaLabelName="work_email"
             value={workEmail || ""}
             onChange={(e) => setWorkEmail(e.target.value)}
-          />
+          /> */}
 
           <FormInput
             inputLabel="Profile Picture"
@@ -207,9 +207,9 @@ function EditUserModal({ isOpen, onClose }) {
             inputName="profile_picture"
             ariaLabelName="picture"
             onChange={(e) => setProfilePic(e.target.files[0])}
-
+            required={false}
           />
-          <FormInput
+          {/* <FormInput
             inputLabel="CV"
             labelFor="CV"
             inputType="file"
@@ -217,7 +217,7 @@ function EditUserModal({ isOpen, onClose }) {
             inputName="CV"
             ariaLabelName="file"
             onChange={(e) => setResume(e.target.files[0])}
-          />
+          /> */}
         </div>
         <Button title="Save"/>
       </form>
