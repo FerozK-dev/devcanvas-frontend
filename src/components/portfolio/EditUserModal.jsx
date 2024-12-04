@@ -4,10 +4,9 @@ import { editUser } from "../../store/user-slice";
 import FormInput from "../reusable/FormInput";
 import Modal from "../reusable/EditModal";
 import Button from "../reusable/Button";
-// import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
-function EditUserModal({ isOpen, onClose }) {
-  const profile = useSelector((state) => state.profile.profileData);
+function EditUserModal({ isOpen, onClose, profile, setProfileData }) {
   const [title, setTitle] = useState("")
   const [lastName, setLName] = useState("");
   const [firstName, setFName] = useState("");
@@ -43,6 +42,17 @@ function EditUserModal({ isOpen, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const updatedUser = {
+      first_name: firstName,
+      last_name: lastName,
+      title: title,
+      location: location,
+      about_me: aboutMe,
+      contact: contact,
+      headline: headline,
+      profile_picture: profilePic
+    }
+
     const formData = new FormData();
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
@@ -63,10 +73,12 @@ function EditUserModal({ isOpen, onClose }) {
     dispatch(editUser(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        toast("Profile Updated")
+        onClose()
+        setProfileData(updatedUser);
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        toast(rejectedValueOrSerializedError)
       });
   };
 

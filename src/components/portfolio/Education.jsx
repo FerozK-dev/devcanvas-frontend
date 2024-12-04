@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteEducation, fetchEducations } from "../../store/education-slice"
 import AddEducationModal from "./AddEducationModal";
 import EditEducationModal from "./EditEducationModal";
+import toast, {Toaster} from "react-hot-toast";
 
 function Education({ data, isPublic }){
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function Education({ data, isPublic }){
   const [selectedEducation, setSelectedEducation] = useState(null);
 
   const [educations, setEducations] = useState(
-    useSelector((state) => state?.educations?.allEducations)
+    // useSelector((state) => state?.educations?.allEducations)
   );
 
   useEffect(() => {
@@ -34,10 +35,11 @@ function Education({ data, isPublic }){
     )
       .unwrap()
       .then((originalPromiseResult) => {
+        toast("Education Removed")
         setEducations(educations.filter((m) => m !== education));
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.message);
+        alert(rejectedValueOrSerializedError);
       });
   };
 
@@ -109,6 +111,8 @@ function Education({ data, isPublic }){
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
                 education={selectedEducation}
+                setEducations={setEducations}
+                educations={educations}
               />
             )}
           </div>

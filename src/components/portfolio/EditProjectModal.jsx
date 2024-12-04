@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProject } from "../../store/projects-slice";
 import Modal from "../reusable/EditModal";
 import ProjectForm from "../reusable/ProjectForm";
+import toast, { Toaster } from "react-hot-toast";
 
-function EditProject({ isOpen, onClose, project }) {
-
-  const [title, setTitle] = useState("") 
+function EditProject({ isOpen, onClose, project, setProjects, projects }) {
+  const [title, setTitle] = useState("")
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,18 +16,24 @@ function EditProject({ isOpen, onClose, project }) {
       setTitle(project.title || "");
       setDescription(project.description || "");
       setPicture(project.dipslay_image || "");
-
     }
   }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const newProject = {
+      title: title,
+      description: description,
+      id: project.id,
+      dipslay_image: picture
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("id", project.id)
- 
+
     if (picture) {
       formData.append("display_image", picture);
     }
@@ -37,10 +41,16 @@ function EditProject({ isOpen, onClose, project }) {
     dispatch(updateProject(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        toast("Project Updated")
+        onClose()
+        setProjects(() =>
+          projects?.map((exp) =>
+            exp?.id === project?.id ? newProject : exp
+          )
+        );
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        toast(rejectedValueOrSerializedError);
       });
   };
 
