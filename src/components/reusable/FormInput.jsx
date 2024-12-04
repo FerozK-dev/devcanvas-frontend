@@ -10,7 +10,8 @@ const FormInput = ({
   ariaLabelName,
   value,
   onChange,
-  customClass
+  customClass,
+  required
 }) => {
 	return (
     <div className={`font-general-regular mb-4 ${customClass}`}>
@@ -29,7 +30,7 @@ const FormInput = ({
         aria-label={ariaLabelName}
         value={value}
         onChange={onChange}
-        required
+        required={required !== undefined ? required : true}
 			/>
 		</div>
 	);
