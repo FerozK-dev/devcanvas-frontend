@@ -2,11 +2,6 @@ import { useState } from 'react';
 import { FiMenu, FiMoon, FiSun, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import useThemeSwitcher from '../../hooks/useThemeSwitcher';
-// import HireMeModal from '../HireMeModal';
-import logoLight from '../../images/logo-light.svg';
-import logoDark from '../../images/logo-dark.svg';
-import { motion } from 'framer-motion';
-import Button from '../reusable/Button'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { useNavigate } from "react-router";
 
@@ -22,25 +17,22 @@ const AppHeader = () => {
   };
 
   const handleNav = () => {
-    setNav(true)
+    setNav(!nav)
   }
   const isAuth = localStorage.getItem("is_logged_in") === "true";
 
 	return (
     <nav className='bg-gray-700 flex justify-between items-center h-20 w-auto mx-auto px-4 text-white'>
-      {/* Logo */}
+
       <Link to="./">
         <h1 className='w-full text-3xl font-bold text-[#00df9a]'>DevCanvas</h1>
       </Link>
 
-      {/* Desktop Navigation */}
-      
       {isAuth === true && (
         <ul className='hidden md:flex'>
           <li className='p-4 hover:bg-[#00df9a] rounded-xl m-3 w-32 cursor-pointer duration-300 hover:text-black'>
             <Link to="/my-portfolio">
               My Portfolio
-              {/* <button>My Portfolio</button> */}
             </Link>
           </li>
           <li className='p-4 hover:bg-[#00df9a] rounded-xl m-3 cursor-pointer duration-300 hover:text-black'>
@@ -48,6 +40,7 @@ const AppHeader = () => {
           </li>
         </ul>
       )}
+
       {!isAuth && (
         <ul className='hidden md:flex'>
           <li className='p-4 hover:bg-[#00df9a] rounded-xl m-2 cursor-pointer duration-300 hover:text-black'>
@@ -64,31 +57,47 @@ const AppHeader = () => {
       )}
 
       {/* Mobile Navigation Icon */}
-      {/* <div onClick={handleNav} className='block md:hidden'>
+      <div onClick={handleNav} className='block md:hidden'>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
-      </div> */}
+      </div>
 
       {/* Mobile Navigation Menu */}
-      {/* <ul
+      <ul
         className={
           nav
             ? 'fixed md:hidden left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500'
             : 'ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 left-[-100%]'
         }
       >
+        <h1 className='w-full text-3xl font-bold text-[#00df9a] m-4'>DevCanvas</h1>
 
-        <h1 className='w-full text-3xl font-bold text-[#00df9a] m-4'>REACT.</h1>
-
-
-        {navItems.map(item => (
-          <li
-            key={item.id}
-            className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600'
-          >
-            {item.text}
-          </li>
-        ))}
-      </ul> */}  
+        {isAuth === true && (
+          <ul className=''>
+            <li className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600'>
+              <Link to="/my-portfolio">
+                My Portfolio
+              </Link>
+            </li>
+            <li className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-white cursor-pointer border-gray-600'>
+              <button onClick={() => logoutHandler()}>Logout</button>
+            </li>
+          </ul>
+        )}
+        {!isAuth && (
+          <ul className=''>
+            <li className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600'>
+              <Link to="./signup">
+                Signup
+              </Link>
+            </li>
+            <li className='p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-white cursor-pointer border-gray-600'>
+              <Link to="./login">
+                Login
+              </Link>
+            </li>
+          </ul>
+        )}
+      </ul>
     </nav>
   );
 

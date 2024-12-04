@@ -6,6 +6,7 @@ import EditExpereience from "./EditExperienceModal";
 
 function Experience({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
   const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function Experience({ data, isPublic }) {
 
   const openEditModal = (experience) => {
     setSelectedExperience(experience);
-    setModalOpen(true);
+    setEditModalOpen(true);
   };
 
   const renderExperience = experiences?.map((experience) => {
@@ -84,13 +85,13 @@ function Experience({ data, isPublic }) {
         {!isPublic && (
           <div className="justify-items-end mt-10">
             <div className="inline-flex rounded-md shadow-sm" role="group">
-              <button 
+              <button
                 onClick={() => openEditModal(experience)}
                 className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
                 Edit
               </button>
-              <button 
+              <button
                 onClick={() => deleteHandler(experience)}
                 className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
@@ -120,14 +121,14 @@ function Experience({ data, isPublic }) {
             >
               Add Experience
             </button>
-            <AddExpereience  
+            <AddExpereience
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
             />
             {selectedExperience && (
               <EditExpereience
-                isOpen={isModalOpen}
-                onClose={() => setModalOpen(false)}
+                isOpen={editModalOpen}
+                onClose={() => setEditModalOpen(false)}
                 experience={selectedExperience}
               />
             )}

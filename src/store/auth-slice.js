@@ -15,7 +15,7 @@ const login = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const auth = await canvasApi.post("/api/v1/session/", { email, password });
-      debugger;
+
       if (304 <= auth?.status) {
         return rejectWithValue(auth?.data?.message);
       }
@@ -76,7 +76,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Failed to login";
       })
-      
+
       // Handle signup
       .addCase(signup.pending, (state) => {
         state.loading = true; // Set loading to true when the signup request starts

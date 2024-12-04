@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import Button from '../reusable/Button';
 import FormInput from '../reusable/FormInput';
+import AuthSide from "../reusable/AuthSide";
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,6 @@ function Registration() {
   const navigate = useNavigate();
 
   const registrationHandler = async () => {
-    console.log("in auth handler");
     event.preventDefault();
     const data = {
       email: email,
@@ -37,8 +37,8 @@ function Registration() {
 
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="w-96">
+    <div className="h-screen flex bg-gray-400 items-center justify-center">
+      <div className="w-4/5 sm:w-4/5 md:w-2/5">
         <form
           onSubmit={registrationHandler}
           className="max-w-xl m-4 p-6 sm:p-10 bg-secondary-light dark:bg-secondary-dark rounded-xl shadow-xl text-left"
@@ -109,8 +109,9 @@ function Registration() {
         />
       </form>
     </div>
-  </div>  
-    );
+    <AuthSide link="/login"/>
+  </div>
+  );
 }
 
 export default Registration;

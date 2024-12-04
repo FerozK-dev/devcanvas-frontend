@@ -5,9 +5,8 @@ import Modal from "../reusable/EditModal";
 import EducationForm from "../reusable/EducationForm";
 
 function EditEducationModal({ isOpen, onClose, education }) {
-  console.log("dddddddddddddd",education)
 
-  const [school, setSchool] = useState("") 
+  const [school, setSchool] = useState("")
   const [description, setDescription] = useState("");
   const [degree, setDegree] = useState("");
   const [startYear, setStartYear] = useState("");
@@ -22,13 +21,13 @@ function EditEducationModal({ isOpen, onClose, education }) {
 
     dispatch(updateEducation({
       id: education?.id,
-      description: description, 
-      start_year: startYear, 
-      end_year: endYear, 
-      school: school, 
-      degree: degree, 
-      field: field, 
-      grade: grade, 
+      description: description,
+      start_year: startYear,
+      end_year: endYear,
+      school: school,
+      degree: degree,
+      field: field,
+      grade: grade,
       activities: activities
     }))
       .unwrap()
@@ -76,7 +75,7 @@ function EditEducationModal({ isOpen, onClose, education }) {
         setDescription={setDescription}
         onSubmit={handleSubmit}
       />
-        
+
     </Modal>
   );
 }
