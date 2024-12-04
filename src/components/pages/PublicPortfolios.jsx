@@ -13,7 +13,6 @@ function PublicPortfolio() {
   const { userId } = useParams();
 
   const { portfolioData, status } = useSelector((state) => state.publicProfile);
-  console.log("status", status)
 
   useEffect(() => {
     dispatch(fetchPublicProfile(userId));

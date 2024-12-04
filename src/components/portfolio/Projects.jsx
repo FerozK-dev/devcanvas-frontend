@@ -7,6 +7,7 @@ import Button from "../reusable/Button";
 
 function Projects({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const dispatch = useDispatch();
 
@@ -27,10 +28,10 @@ function Projects({ data, isPublic }) {
   }, [dispatch, isPublic, data]);
 
 
-    const openEditModal = (project) => {
-      setSelectedProject(project);
-      setModalOpen(true);
-    };
+  const openEditModal = (project) => {
+    setSelectedProject(project);
+    setEditModalOpen(true);
+  };
 
   const deleteHandler = (project) => {
     dispatch(
@@ -53,10 +54,10 @@ function Projects({ data, isPublic }) {
       // <div className="flex space-x-6" key={id}>
       <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6" key={id}>
         <div className=" w-96">
-          <img 
-            src={display_image} 
-            alt="Profile" 
-            className="h-40 rounded-lg object-cover" 
+          <img
+            src={display_image}
+            alt="Profile"
+            className="h-40 rounded-lg object-cover"
           />
         </div>
 
@@ -71,13 +72,13 @@ function Projects({ data, isPublic }) {
         {!isPublic && (
           <div className="justify-items-end mt-10">
               <div className="inline-flex rounded-md shadow-sm" role="group">
-              <button 
+              <button
                 onClick={() => openEditModal(project)}
                 className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
                 Edit
               </button>
-              <button 
+              <button
                 onClick={() => deleteHandler(project)}
                 className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
@@ -112,7 +113,7 @@ function Projects({ data, isPublic }) {
             >
               Add a Project
             </button>
-            <AddProjects  
+            <AddProjects
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
             />
@@ -120,8 +121,8 @@ function Projects({ data, isPublic }) {
         )}
         {selectedProject && !isPublic && (
           <EditProject
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
+            isOpen={editModalOpen}
+            onClose={() => setEditModalOpen(false)}
             project={selectedProject} // Pass the selected project to the modal
           />
         )}

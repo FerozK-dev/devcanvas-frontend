@@ -4,20 +4,19 @@ import FormInput from '../reusable/FormInput';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../store/auth-slice"
-
+import AuthSide from "../reusable/AuthSide";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email: email, password: password }))
       .unwrap()
       .then((originalPromiseResult) => {
-        console.log("hello you are logged in")
         navigate("/my-portfolio");
       })
       .catch((rejectedValueOrSerializedError) => {
@@ -26,8 +25,8 @@ const Auth = () => {
   };
 
 	return (
-		<div className="h-screen flex items-center justify-center">
-			<div className="w-96">
+		<div className="h-screen bg-gray-400 flex items-center justify-center">
+      <div className="w-4/5 sm:w-4/5 md:w-2/5">
 				<form
 					onSubmit={handleSubmit}
 					className="max-w-xl m-4 p-6 sm:p-10 bg-secondary-light dark:bg-secondary-dark rounded-xl shadow-xl text-left"
@@ -65,6 +64,7 @@ const Auth = () => {
           />
 				</form>
 			</div>
+      <AuthSide link="/signup"/>
 		</div>
 	);
 };
