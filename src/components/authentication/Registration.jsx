@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import Button from '../reusable/Button';
 import FormInput from '../reusable/FormInput';
 import AuthSide from "../reusable/AuthSide";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,8 @@ function Registration() {
 
   const registrationHandler = async () => {
     event.preventDefault();
+    toast('Signing you up.');
+
     const data = {
       email: email,
       password: password,
@@ -31,13 +34,14 @@ function Registration() {
         navigate("/my-portfolio");
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.message);
+        toast(rejectedValueOrSerializedError)
       });
   };
 
 
   return (
     <div className="h-screen flex bg-gray-400 items-center justify-center">
+      <Toaster/>
       <div className="w-4/5 sm:w-4/5 md:w-2/5">
         <form
           onSubmit={registrationHandler}

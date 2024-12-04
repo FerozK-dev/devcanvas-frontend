@@ -4,18 +4,26 @@ import { addExperience } from "../../store/experience-slice";
 import Modal from "../reusable/EditModal";
 import ExperienceForm from "../reusable/ExperienceForm";
 
-function AddExpereience({ isOpen, onClose }) {
-  const [title, setTitle] = useState("") 
+function AddExpereience({ isOpen, onClose, setExperiences }) {
+  const [title, setTitle] = useState("")
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
   const dispatch = useDispatch();
-  const experiences = useSelector((state) => state.experiences.allExperiences);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newExperience = {
+      title: title,
+      description: description,
+      company: company,
+      end_date: endDate,
+      start_date: startDate,
+      location: location
+    }
 
     dispatch(addExperience({
       title: title,
@@ -27,6 +35,8 @@ function AddExpereience({ isOpen, onClose }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
+        // onClose()
+        // setExperiences(experiences => [...experiences, newExperience]);
         window.location.reload();
       })
       .catch((rejectedValueOrSerializedError) => {
@@ -52,7 +62,7 @@ function AddExpereience({ isOpen, onClose }) {
         setEndDate={setEndDate}
         onSubmit={handleSubmit}
       />
-        
+
     </Modal>
   );
 }

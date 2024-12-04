@@ -4,6 +4,7 @@ import { deleteProject, fetchProjects } from "../../store/projects-slice"
 import AddProjects from "./AddProjectModal";
 import EditProject from "./EditProjectModal";
 import Button from "../reusable/Button";
+import toast from "react-hot-toast";
 
 function Projects({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -41,10 +42,11 @@ function Projects({ data, isPublic }) {
     )
       .unwrap()
       .then((originalPromiseResult) => {
+        toast("Project Removed")
         setProjects(projects.filter((m) => m !== project));
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.message);
+        toast(rejectedValueOrSerializedError);
       });
   };
 
@@ -124,6 +126,8 @@ function Projects({ data, isPublic }) {
             isOpen={editModalOpen}
             onClose={() => setEditModalOpen(false)}
             project={selectedProject} // Pass the selected project to the modal
+            setProjects={setProjects}
+            projects={projects}
           />
         )}
       </div>

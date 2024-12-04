@@ -99,7 +99,7 @@ const experienceSlice = createSlice({
       .addCase(fetchExperiences.fulfilled, (state, action) => {
         state.allExperiences = action.payload;
       })
-      .addCase(fetchExperiences.rejected, (state, action) => {}) 
+      .addCase(fetchExperiences.rejected, (state, action) => {})
       .addCase(updateExperience.pending, (state) => {})
       .addCase(updateExperience.fulfilled, (state, action) => {})
       .addCase(updateExperience.rejected, (state, action) => {
@@ -114,7 +114,7 @@ const experienceSlice = createSlice({
       .addCase(deleteExperience.fulfilled, (state, action) => {})
       .addCase(deleteExperience.rejected, (state, action) => {
         state.error = action.payload.message;
-      }) 
+      })
     }
 });
 

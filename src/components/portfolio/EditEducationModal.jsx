@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";;
 import { updateEducation } from "../../store/education-slice";
 import Modal from "../reusable/EditModal";
 import EducationForm from "../reusable/EducationForm";
+import toast, {Toaster} from "react-hot-toast";
 
-function EditEducationModal({ isOpen, onClose, education }) {
+function EditEducationModal({ isOpen, onClose, education, setEducations, educations }) {
 
   const [school, setSchool] = useState("")
   const [description, setDescription] = useState("");
@@ -19,6 +20,18 @@ function EditEducationModal({ isOpen, onClose, education }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const newEducation = {
+      id: education?.id,
+      description: description,
+      start_year: startYear,
+      end_year: endYear,
+      school: school,
+      degree: degree,
+      field: field,
+      grade: grade,
+      activities: activities
+    }
+
     dispatch(updateEducation({
       id: education?.id,
       description: description,
@@ -32,10 +45,16 @@ function EditEducationModal({ isOpen, onClose, education }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        toast("Education Updated")
+        onClose()
+        setEducations(() =>
+          educations?.map((exp) =>
+            exp?.id === education?.id ? newEducation : exp
+          )
+        );
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        toast(rejectedValueOrSerializedError);
       });
   };
 

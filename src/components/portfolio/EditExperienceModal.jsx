@@ -3,20 +3,30 @@ import { useDispatch, useSelector } from "react-redux";;
 import { fetchExperiences, updateExperience } from "../../store/experience-slice";
 import Modal from "../reusable/EditModal";
 import ExperienceForm from "../reusable/ExperienceForm";
+import toast, { Toaster } from "react-hot-toast";
 
-function EditExpereience({ isOpen, onClose, experience, setExperiences }) {
-  const experiences = useSelector((state) => state.experiences.allExperiences);
-  
-  const [title, setTitle] = useState("") 
+function EditExpereience({ isOpen, onClose, experience, setExperiences, experiences, dispatch }) {
+
+  const [title, setTitle] = useState("")
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newExperience = {
+      id: experience?.id,
+      title: title,
+      description: description,
+      company: company,
+      end_date: endDate,
+      start_date: startDate,
+      location: location
+    }
 
     dispatch(updateExperience({
       id: experience?.id,
@@ -29,10 +39,16 @@ function EditExpereience({ isOpen, onClose, experience, setExperiences }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        toast("Updating Experience")
+        onClose()
+        setExperiences(() =>
+          experiences?.map((exp) =>
+            exp?.id === experience?.id ? newExperience : exp
+          )
+        );
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        toast(rejectedValueOrSerializedError);
       });
   };
 
@@ -66,7 +82,7 @@ function EditExpereience({ isOpen, onClose, experience, setExperiences }) {
         setEndDate={setEndDate}
         onSubmit={handleSubmit}
       />
-        
+
     </Modal>
   );
 }

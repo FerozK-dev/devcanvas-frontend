@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../store/auth-slice"
 import AuthSide from "../reusable/AuthSide";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -14,18 +15,21 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toast('Verifying your credentials.');
+
     dispatch(login({ email: email, password: password }))
       .unwrap()
       .then((originalPromiseResult) => {
         navigate("/my-portfolio");
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.message);
+        toast(rejectedValueOrSerializedError)
       });
   };
 
 	return (
 		<div className="h-screen bg-gray-400 flex items-center justify-center">
+      <Toaster/>
       <div className="w-4/5 sm:w-4/5 md:w-2/5">
 				<form
 					onSubmit={handleSubmit}

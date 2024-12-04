@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteExperience, fetchExperiences } from "../../store/experience-slice"
 import AddExpereience from "./AddExperienceModal";
 import EditExpereience from "./EditExperienceModal";
+import toast, {Toaster} from "react-hot-toast";
 
 function Experience({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -11,7 +12,7 @@ function Experience({ data, isPublic }) {
   const dispatch = useDispatch();
 
   const [experiences, setExperiences] = useState(
-    useSelector((state) => state?.experiences?.allExperiences)
+    // useSelector((state) => state?.experiences?.allExperiences)
   );
 
   useEffect(() => {
@@ -34,10 +35,11 @@ function Experience({ data, isPublic }) {
     )
       .unwrap()
       .then((originalPromiseResult) => {
+        toast("Experience Removed")
         setExperiences(experiences.filter((m) => m !== experience));
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.message);
+        toast(rejectedValueOrSerializedError);
       });
   };
 
@@ -124,12 +126,16 @@ function Experience({ data, isPublic }) {
             <AddExpereience
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
+              setExperiences={setExperiences}
             />
             {selectedExperience && (
               <EditExpereience
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
                 experience={selectedExperience}
+                setExperiences={setExperiences}
+                experiences={experiences}
+                dispatch={dispatch}
               />
             )}
           </>

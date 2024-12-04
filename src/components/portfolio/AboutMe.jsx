@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, togglePublish } from "../../store/user-slice"
 import EditUserModal from "./EditUserModal"
+import toast, { Toaster } from "react-hot-toast";
 
 function AboutMe({ data, isPublic }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const [portfolioPublished, setPortfolioPublished] = useState(true);
 
   const [profileData, setProfileData] = useState(
-    useSelector((state) => state.profile)
+    // useSelector((state) => state.profile)
   );
 
-  const [portfolioPublished, setPortfolioPublished] = useState(
-    useSelector((state) => state.profile.publish_portfolio)
-  );
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   useEffect(() => {
     if (isPublic) {
@@ -23,18 +26,19 @@ function AboutMe({ data, isPublic }) {
         .unwrap()
         .then((result) => {
           setProfileData(result);
+          setPortfolioPublished(result?.publish_portfolio)
         });
     }
-  }, [dispatch, isPublic, data]);
+  }, [dispatch, isPublic, data, portfolioPublished]);
 
   const updatePortfolioStatus = () => {
     dispatch(
       togglePublish())
       .unwrap()
       .then((originalPromiseResult) => {
-        setPortfolioPublished(!portfolioPublished)
-        // navigate(`/portfolio/${profileData.id}`);
-        if (portfolioPublished){ window.open(`/portfolio/${profileData.id}`,'_blank', 'rel=noopener noreferrer')}
+        toast(`${portfolioPublished ? "Un-Published" : "Published"  } Portfolio`)
+        setPortfolioPublished(!profileData?.publish_portfolio)
+        if (!profileData?.publish_portfolio) { window.open(`/portfolio/${profileData.id}`,'_blank', 'rel=noopener noreferrer')}
       })
       .catch((rejectedValueOrSerializedError) => {
         alert(rejectedValueOrSerializedError.message);
@@ -68,7 +72,7 @@ function AboutMe({ data, isPublic }) {
           {!isPublic && (
             <div className="justify-items-center">
               <div className="mt-10">
-                <div className="inline-flex rounded-md shadow-sm" role="group">
+                <div className="inline-flex rounded-md shadow-sm relative" role="group">
                   <button
                     onClick={() => setModalOpen(true)}
                     className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
@@ -76,16 +80,32 @@ function AboutMe({ data, isPublic }) {
                     Edit
                   </button>
                   <button
+                    data-tooltip-target="tooltip-default"
+                    type="button"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                     onClick={() => updatePortfolioStatus(true)}
                     className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
                   >
-                    {portfolioPublished? "Publish" : "Unpublish" } Portfolio
+                    {portfolioPublished ? "Un-Publish" : "Publish"  } Portfolio
                   </button>
+                  {isHovered && (
+                    <div
+                      id="tooltip-default"
+                      role="tooltip"
+                      className="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-100 transition-opacity duration-300 tooltip dark:bg-gray-700"
+                      style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }}
+                    >
+                      Copy the link of your published portfolio to share.
+                    </div>
+                  )}
                 </div>
               </div>
               <EditUserModal
                 isOpen={isModalOpen}
                 onClose={() => setModalOpen(false)}
+                profile={profileData}
+                setProfileData={setProfileData}
               />
             </div>
           )}
