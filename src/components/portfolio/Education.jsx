@@ -105,6 +105,7 @@ function Education({ data, isPublic }){
             <AddEducationModal
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
+              setEducations={setEducations}
             />
             {selectedEducation && (
               <EditEducationModal

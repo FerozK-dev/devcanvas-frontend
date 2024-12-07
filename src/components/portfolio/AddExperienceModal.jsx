@@ -35,12 +35,11 @@ function AddExpereience({ isOpen, onClose, setExperiences }) {
     }))
       .unwrap()
       .then((originalPromiseResult) => {
-        // onClose()
-        // setExperiences(experiences => [...experiences, newExperience]);
-        window.location.reload();
+        onClose()
+        setExperiences(experiences => [...experiences, originalPromiseResult]);
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        alert(rejectedValueOrSerializedError);
       });
   };
 

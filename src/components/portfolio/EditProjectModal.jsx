@@ -45,7 +45,7 @@ function EditProject({ isOpen, onClose, project, setProjects, projects }) {
         onClose()
         setProjects(() =>
           projects?.map((exp) =>
-            exp?.id === project?.id ? newProject : exp
+            exp?.id === project?.id ? originalPromiseResult : exp
           )
         );
       })

@@ -118,6 +118,7 @@ function Projects({ data, isPublic }) {
             <AddProjects
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
+              setProjects={setProjects}
             />
           </div>
         )}
