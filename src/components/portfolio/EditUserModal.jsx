@@ -42,17 +42,6 @@ function EditUserModal({ isOpen, onClose, profile, setProfileData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const updatedUser = {
-      first_name: firstName,
-      last_name: lastName,
-      title: title,
-      location: location,
-      about_me: aboutMe,
-      contact: contact,
-      headline: headline,
-      profile_picture: profilePic
-    }
-
     const formData = new FormData();
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
@@ -75,7 +64,7 @@ function EditUserModal({ isOpen, onClose, profile, setProfileData }) {
       .then((originalPromiseResult) => {
         toast("Profile Updated")
         onClose()
-        setProfileData(updatedUser);
+        setProfileData(originalPromiseResult);
       })
       .catch((rejectedValueOrSerializedError) => {
         toast(rejectedValueOrSerializedError)

@@ -5,6 +5,7 @@ import Education from "../portfolio/Education";
 import Experience from "../portfolio/Experience";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function Portfolio() {
 
   return (
     <div>
+      <Toaster/>
       <AboutMe isPublic={false}/>
       {/* <Sandbox/> */}
       <Education/>

@@ -6,8 +6,8 @@ import Modal from "../reusable/EditModal";
 import Button from "../reusable/Button";
 import ProjectForm from "../reusable/ProjectForm";
 
-function AddProjects({ isOpen, onClose }) {
-  const [title, setTitle] = useState("") 
+function AddProjects({ isOpen, onClose, setProjects }) {
+  const [title, setTitle] = useState("")
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState("");
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function AddProjects({ isOpen, onClose }) {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
- 
+
     if (picture) {
       formData.append("display_image", picture);
     }
@@ -26,10 +26,10 @@ function AddProjects({ isOpen, onClose }) {
     dispatch(addProject(formData))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        setProjects(projects => [...projects, originalPromiseResult])
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        alert(rejectedValueOrSerializedError);
       });
   };
 

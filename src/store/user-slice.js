@@ -84,7 +84,6 @@ const profileSlice = createSlice({
         state.profileData = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {})
-      
       .addCase(editUser.pending, (state) => {})
       .addCase(editUser.fulfilled, (state, action) => {
         state.profileData = action.payload;

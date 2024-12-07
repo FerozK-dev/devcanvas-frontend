@@ -4,8 +4,8 @@ import { addEducation, AddEducation } from "../../store/education-slice";
 import Modal from "../reusable/EditModal";
 import EducationForm from "../reusable/EducationForm";
 
-function AddEducationModal({ isOpen, onClose }) {
-  const [school, setSchool] = useState("") 
+function AddEducationModal({ isOpen, onClose, setEducations }) {
+  const [school, setSchool] = useState("")
   const [description, setDescription] = useState("");
   const [degree, setDegree] = useState("");
   const [startYear, setStartYear] = useState("");
@@ -13,27 +13,28 @@ function AddEducationModal({ isOpen, onClose }) {
   const [field, setField] = useState("");
   const [grade, setGrade] = useState("");
   const [activities, setActivities] = useState("");
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(addEducation({
-      description: description, 
-      start_year: startYear, 
-      end_year: endYear, 
-      school: school, 
-      degree: degree, 
-      field: field, 
-      grade: grade, 
+      description: description,
+      start_year: startYear,
+      end_year: endYear,
+      school: school,
+      degree: degree,
+      field: field,
+      grade: grade,
       activities: activities
     }))
       .unwrap()
       .then((originalPromiseResult) => {
-        window.location.reload();
+        onClose()
+        setEducations(educations => [...educations, originalPromiseResult])
       })
       .catch((rejectedValueOrSerializedError) => {
-        alert(rejectedValueOrSerializedError.error);
+        alert(rejectedValueOrSerializedError);
       });
   };
 
