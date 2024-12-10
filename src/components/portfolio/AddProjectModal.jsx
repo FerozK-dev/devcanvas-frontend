@@ -26,6 +26,7 @@ function AddProjects({ isOpen, onClose, setProjects }) {
     dispatch(addProject(formData))
       .unwrap()
       .then((originalPromiseResult) => {
+        onClose()
         setProjects(projects => [...projects, originalPromiseResult])
       })
       .catch((rejectedValueOrSerializedError) => {
